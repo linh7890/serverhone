@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Ủng hộ Server - Asaka Cloud</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+    }
+    h1 {
+      color: #4caf50;
+    }
+    .info-box {
+      background-color: #1f1f1f;
+      padding: 20px;
+      border-radius: 10px;
+      display: inline-block;
+      text-align: left;
+      max-width: 400px;
+      margin-top: 20px;
+    }
+    .info-box ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .info-box li {
+      margin-bottom: 10px;
+    }
+    .qr-img {
+      width: 100%;
+      border-radius: 10px;
+      margin: 15px 0;
+    }
+    .copy-btn {
+      background-color: #00bcd4;
+      border: none;
+      color: white;
+      padding: 2px 6px;
+      font-size: 12px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    a.back {
+      margin-top: 30px;
+      display: inline-block;
+      color: #00ffff;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>💖 Ủng hộ Server - Asaka Cloud</h1>
+
+  <div class="info-box">
+    <ul>
+      <li><strong>🏢 Nhà cung cấp:</strong> Asaka Cloud</li>
+      <li><strong>👤 Chủ tài khoản:</strong> Phạm Trần Công Danh</li>
+      <li><strong>🏦 Ngân hàng:</strong> Vietcombank (VCB)</li>
+      <li><strong>🔢 Số tài khoản:</strong> <span id="stk">1057148974</span> 
+        <button class="copy-btn" onclick="copyText('stk')">📋</button>
+      </li>
+      <li><strong>💸 Số tiền:</strong> 5,000đ</li>
+      <li><strong>📝 Nội dung CK:</strong> <span id="ndck">ASAKA11572</span> 
+        <button class="copy-btn" onclick="copyText('ndck')">📋</button>
+      </li>
+    </ul>
+    <img class="qr-img" 
+         src="https://api.vietqr.io/image/VCB-1057148974-mGf9uVI.jpg?amount=5000&addInfo=ASAKA11572&accountName=Phạm Trần Công Danh" 
+         alt="QR VietQR - Phạm Trần Công Danh">
+    <p style="font-size: 0.9em; color: #ccc;">Vui lòng chuyển đúng nội dung và số tiền.<br>Cảm ơn bạn đã đồng hành!</p>
+  </div>
+
+  <a class="back" href="index.html">⬅️ Quay về Trang chính</a>
+
+  <script>
+    function copyText(id) {
+      const text = document.getElementById(id).innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        alert("✅ Đã sao chép: " + text);
+      });
+    }
+  </script>
+
+</body>
+</html>

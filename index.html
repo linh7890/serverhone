@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Trang chính</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #fff;
+    }
+
+    .navbar {
+      background-color: #1d1f2b;
+      padding: 10px 0;
+    }
+
+    .navbar-menu {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+    }
+
+    .navbar-menu li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 8px 12px;
+      display: block;
+      transition: color 0.2s;
+    }
+
+    .navbar-menu li a:hover {
+      color: #00ffff;
+    }
+
+    .popup {
+      display: none;
+      position: fixed;
+      top: 20%;
+      left: 50%;
+      transform: translate(-50%, -20%);
+      background-color: #2c2c2c;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+      z-index: 100;
+      width: 300px;
+    }
+
+    .popup-header {
+      font-weight: bold;
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    .popup-close {
+      float: right;
+      cursor: pointer;
+      color: red;
+      font-weight: bold;
+    }
+
+    .notification-box {
+      background-color: #333;
+      padding: 20px;
+      margin: 40px auto;
+      width: 80%;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+      text-align: left;
+    }
+
+    .notification-box h2 {
+      margin-bottom: 10px;
+      color: #4caf50;
+      text-align: center;
+    }
+
+    #notification-list {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    #notification-list li {
+      padding: 6px 0;
+      border-bottom: 1px solid #444;
+    }
+
+    /* Register/Login góc phải */
+    #auth-buttons {
+      position: fixed;
+      top: 10px;
+      right: 20px;
+      z-index: 999;
+    }
+
+    #auth-buttons a {
+      color: #00ffff;
+      margin-left: 12px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    #auth-buttons a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Register/Login góc phải -->
+  <div id="auth-buttons">
+    <a href="register.html">🔐 Register</a>
+    <a href="login.html">🔓 Login</a>
+  </div>
+
+  <!-- MENU -->
+  <nav class="navbar">
+    <ul class="navbar-menu">
+      <li><a href="home.html">🏠 Home</a></li>
+      <li><a href="report.html">🚨 Tố cáo Hacker</a></li>
+      <li><a href="#" onclick="showAdmins()">👮 Admin</a></li>
+      <li><a href="donate.html">💖 Donate</a></li>
+    </ul>
+  </nav>
+
+  <!-- THÔNG BÁO -->
+  <div class="notification-box" id="notifications">
+    <h2>📢 Thông báo Server</h2>
+    <ul id="notification-list">
+      <li>Đang tải thông báo...</li>
+    </ul>
+  </div>
+
+  <!-- Popup Admin -->
+  <div id="adminPopup" class="popup">
+    <span class="popup-close" onclick="hidePopup('adminPopup')">✖</span>
+    <div class="popup-header">👑 Đội ngũ Admin</div>
+    <ul>
+      <li>🔰 DuckGamer27th2</li>
+      <li>🔰 tutan</li>
+    </ul>
+  </div>
+
+  <script>
+    // Ẩn nút register/login nếu đã đăng nhập
+    const authBox = document.getElementById("auth-buttons");
+    const username = localStorage.getItem("username");
+    if (username) {
+      authBox.style.display = "none";
+    }
+
+    function showAdmins() {
+      document.getElementById("adminPopup").style.display = "block";
+    }
+
+    function hidePopup(id) {
+      document.getElementById(id).style.display = "none";
+    }
+
+    // Tải thông báo từ JSON
+    fetch("notifications.json")
+      .then(res => res.json())
+      .then(data => {
+        const list = document.getElementById("notification-list");
+        list.innerHTML = "";
+        data.forEach(msg => {
+          const li = document.createElement("li");
+          li.textContent = msg;
+          list.appendChild(li);
+        });
+      })
+      .catch(() => {
+        document.getElementById("notification-list").innerHTML = "<li>Không thể tải thông báo.</li>";
+      });
+  </script>
+
+</body>
+</html>

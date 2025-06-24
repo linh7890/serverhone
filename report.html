@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Tố cáo Hacker</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    textarea {
+      width: 80%;
+      height: 150px;
+      border-radius: 8px;
+      border: none;
+      padding: 10px;
+      font-size: 14px;
+      resize: none;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background-color: #00bcd4;
+      border: none;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+
+    button:hover {
+      background-color: #00acc1;
+    }
+  </style>
+</head>
+<body>
+  <h2>🚨 Gửi tố cáo hacker</h2>
+  <textarea id="reportContent" placeholder="Nhập nội dung tố cáo..."></textarea><br>
+  <button onclick="sendReport()">Gửi tố cáo</button>
+
+  <script>
+    // Giả lập kiểm tra đã đăng nhập bằng localStorage (tên đăng nhập)
+    const username = localStorage.getItem("username");
+
+    function sendReport() {
+      const content = document.getElementById("reportContent").value.trim();
+
+      if (!username) {
+        alert("⚠️ Bạn phải đăng ký và đăng nhập trước khi tố cáo!");
+        return;
+      }
+
+      if (!content) {
+        alert("❗ Vui lòng nhập nội dung tố cáo.");
+        return;
+      }
+
+      const webhookURL = "https://discord.com/api/webhooks/1386916783805698199/dHE-CckVA6QKjrxkSB0Jw1TFoeCVtveHTB3ITcZCiCwx2vjyXSUb3-joXgNj9XnM1jo6";
+
+      const payload = {
+        content: `🚨 **Tố cáo từ người chơi \`${username}\`**\n>>> ${content}`
+      };
+
+      fetch(webhookURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      })
+      .then(response => {
+        if (response.ok) {
+          alert("✅ Đã gửi tố cáo đến Admin!");
+          document.getElementById("reportContent").value = "";
+        } else {
+          alert("❌ Lỗi khi gửi lên Discord. Kiểm tra lại Webhook!");
+        }
+      })
+      .catch(error => {
+        console.error("Lỗi gửi webhook:", error);
+        alert("❌ Đã xảy ra lỗi kết nối!");
+      });
+    }
+  </script>
+</body>
+</html>
